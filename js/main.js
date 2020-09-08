@@ -4,7 +4,9 @@
 const score = document.querySelector('.score'),
     game = document.querySelector('.game'),
     gameStart = document.querySelector('.game-start'),
-    gameArea = document.querySelector('.game-area');
+    gameArea = document.querySelector('.game-area'),
+    car = document.createElement('div');
+car.classList.add('car');
 
 //? "Enum" object control
 const keys = {
@@ -24,6 +26,7 @@ const setting = {
 const startGame = () => {
     gameStart.classList.add('hide');
     setting.start = true;
+    gameArea.appendChild(car);
     requestAnimationFrame(playGame);
 }
 

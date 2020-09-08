@@ -1,3 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
 .hide {
     display: none;
+}
+
+.car {
+    width: 50px;
+    height: 110px;
+    background: transparent url(/image/player_2.webp) center / cover no-repeat
 }
