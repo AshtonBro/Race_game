@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 //? Get DOM elements
 const score = document.querySelector('.score'),
@@ -26,6 +26,14 @@ const setting = {
 
 const startGame = () => {
     gameStart.classList.add('hide');
+
+    for (let i = 0; i < 20; i++) {
+        const line = document.createElement('div');
+        line.classList.add('line');
+        line.style.top = (i * 100) + 'px'; //* 50 'it's distance between lines
+        gameArea.appendChild(line);
+    }
+
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -36,16 +44,16 @@ const startGame = () => {
 const playGame = () => {
     console.log('play game');
     if (setting.start) {
-        if (keys.ArrowLeft) {
+        if (keys.ArrowLeft && setting.x > 0) {
             setting.x -= setting.speed;
         }
-        if (keys.ArrowRight) {
+        if (keys.ArrowRight && setting.x < (gameArea.offsetWidth - car.offsetWidth)) {
             setting.x += setting.speed;
         }
-        if (keys.ArrowDown) {
+        if (keys.ArrowDown && setting.y < (gameArea.offsetHight - car.offsetHight)) {
             setting.y += setting.speed;
         }
-        if (keys.ArrowUp) {
+        if (keys.ArrowUp && setting.y > 0) {
             setting.y -= setting.speed;
         }
 
