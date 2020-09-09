@@ -31,6 +31,7 @@ const startGame = () => {
         const line = document.createElement('div');
         line.classList.add('line');
         line.style.top = (i * 100) + 'px'; //* 50 'it's distance between lines
+        line.y = i * 100;
         gameArea.appendChild(line);
     }
 
@@ -42,8 +43,10 @@ const startGame = () => {
 };
 
 const playGame = () => {
-    console.log('play game');
     if (setting.start) {
+
+        moveRoad();
+
         if (keys.ArrowLeft && setting.x > 0) {
             setting.x -= setting.speed;
         }
@@ -71,6 +74,18 @@ const startRun = (event) => {
 const stopRun = (event) => {
     event.preventDefault();
     keys[event.key] = false;
+};
+
+const moveRoad = () => {
+    let lines = document.querySelectorAll('.line');
+    lines.forEach((item) => {
+        item.y += setting.speed;
+        item.style.top = item.y + 'px';
+
+        if (item.y > document.documentElement.clientHeight) {
+            item.y = -80;
+        }
+    });
 };
 
 //? EventListeners
