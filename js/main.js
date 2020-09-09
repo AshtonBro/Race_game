@@ -34,12 +34,24 @@ const getQuantityElemnts = (heightElement) => {
 const startGame = () => {
     gameStart.classList.add('hide');
 
+    //? Lines addition cycle
     for (let i = 0; i < getQuantityElemnts(100); i++) {
         const line = document.createElement('div');
         line.classList.add('line');
         line.style.top = (i * 100) + 'px'; //* 50 'it's distance between lines
         line.y = i * 100;
         gameArea.appendChild(line);
+    }
+
+    //? Machine addition cycle
+    for (let i = 0; i < getQuantityElemnts(110 * setting.traffic); i++) {
+        const enemy = document.createElement('div');
+        enemy.classList.add('enemy');
+        enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
+        enemy.y = -110 * setting.traffic * (i + 1);
+        enemy.style.top = enemy.y + 'px';
+        enemy.style.background = 'transparent url(/image/enemy2.webp) center / cover no-repeat;';
+        gameArea.appendChild(enemy);
     }
 
     setting.start = true;
@@ -54,6 +66,7 @@ const playGame = () => {
     if (setting.start) {
 
         moveRoad();
+        moveEnemy();
 
         if (keys.ArrowLeft && setting.x > 0) {
             setting.x -= setting.speed;
@@ -92,7 +105,21 @@ const moveRoad = () => {
         item.y += setting.speed;
         item.style.top = item.y + 'px';
         if (item.y > document.documentElement.clientHeight) {
-            item.y = -80;
+            item.y = -100;
+        }
+    });
+};
+
+//? The function gets all cars on the road and makes them moveable
+const moveEnemy = () => {
+    let enemies = document.querySelectorAll('.enemy');
+    enemies.forEach((item) => {
+        item.y += setting.speed / 2;
+        item.style.top = item.y + 'px';
+
+        if (item.y >= document.documentElement.clientHeight) {
+            item.y = -100 * setting.traffic;
+            item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         }
     });
 };
