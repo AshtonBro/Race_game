@@ -21,13 +21,20 @@ const keys = {
 const setting = {
     start: false,
     score: 0,
-    speed: 3
+    speed: 3,
+    traffic: 3
 };
 
+//? The function calculates the height of the user's screen and returns the number of lines to fill it
+const getQuantityElemnts = (heightElement) => {
+    return document.documentElement.clientHeight / heightElement + 1;
+};
+
+//? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
 const startGame = () => {
     gameStart.classList.add('hide');
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < getQuantityElemnts(100); i++) {
         const line = document.createElement('div');
         line.classList.add('line');
         line.style.top = (i * 100) + 'px'; //* 50 'it's distance between lines
@@ -42,6 +49,7 @@ const startGame = () => {
     requestAnimationFrame(playGame);
 };
 
+//? The function is responsible for controlling objects on the page
 const playGame = () => {
     if (setting.start) {
 
@@ -76,19 +84,20 @@ const stopRun = (event) => {
     keys[event.key] = false;
 };
 
+
+//? The Function gets all lines and drags them down the screen
 const moveRoad = () => {
     let lines = document.querySelectorAll('.line');
     lines.forEach((item) => {
         item.y += setting.speed;
         item.style.top = item.y + 'px';
-
         if (item.y > document.documentElement.clientHeight) {
             item.y = -80;
         }
     });
 };
 
-//? EventListeners
+//? The EventListeners methods
 gameStart.addEventListener('click', startGame);
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
