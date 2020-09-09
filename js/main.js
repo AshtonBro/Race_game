@@ -3,7 +3,7 @@
 //? Get DOM elements
 const score = document.querySelector('.score'),
     game = document.querySelector('.game'),
-    gameStart = document.querySelector('.game-start'),
+    start = document.querySelector('.game-start'),
     gameArea = document.querySelector('.game-area'),
     car = document.createElement('div');
 
@@ -32,7 +32,7 @@ const getQuantityElemnts = (heightElement) => {
 
 //? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
 const startGame = () => {
-    gameStart.classList.add('hide');
+    start.classList.add('hide');
 
     //? Lines addition cycle
     for (let i = 0; i < getQuantityElemnts(100); i++) {
@@ -50,7 +50,7 @@ const startGame = () => {
         enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         enemy.y = -110 * setting.traffic * (i + 1);
         enemy.style.top = enemy.y + 'px';
-        enemy.style.background = 'transparent url(/image/enemy2.webp) center / cover no-repeat;';
+        enemy.style.background = 'transparent url(/image/enemy5.webp) center / cover no-repeat';
         gameArea.appendChild(enemy);
     }
 
@@ -74,13 +74,12 @@ const playGame = () => {
         if (keys.ArrowRight && setting.x < (gameArea.offsetWidth - car.offsetWidth)) {
             setting.x += setting.speed;
         }
-        if (keys.ArrowDown && setting.y < (gameArea.offsetHight - car.offsetHight)) {
-            setting.y += setting.speed;
-        }
         if (keys.ArrowUp && setting.y > 0) {
             setting.y -= setting.speed;
         }
-
+        if (keys.ArrowDown && setting.y < (gameArea.offsetHeight - car.offsetHeight)) {
+            setting.y += setting.speed;
+        }
         car.style.left = setting.x + 'px';
         car.style.top = setting.y + 'px';
         requestAnimationFrame(playGame);
@@ -125,6 +124,6 @@ const moveEnemy = () => {
 };
 
 //? The EventListeners methods
-gameStart.addEventListener('click', startGame);
+start.addEventListener('click', startGame);
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
