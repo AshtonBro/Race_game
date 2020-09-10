@@ -44,15 +44,21 @@ const startGame = () => {
     gameArea.appendChild(line);
   }
 
+  //? Get random int with specific range
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
   //? Machine addition cycle
   for (let i = 0; i < getQuantityElemnts(110 * setting.traffic); i++) {
     const enemy = document.createElement("div");
+    let rnd = getRandomInt(2, 6);
     enemy.classList.add("enemy");
     enemy.style.left =
       Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     enemy.y = -110 * setting.traffic * (i + 1);
     enemy.style.top = enemy.y + "px";
-    enemy.style.background = $`transparent url(/image/enemy{5}.webp) center / cover no-repeat`;
+    enemy.style.background = `transparent url(/image/enemy${rnd}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
   }
 
@@ -127,6 +133,7 @@ const moveEnemy = () => {
       carRect.left <= enemyRect.right &&
       carRect.bottom >= enemyRect.top
     ) {
+      setting.start = false;
     }
 
     item.y += setting.speed / 2;
