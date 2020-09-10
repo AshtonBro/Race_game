@@ -30,6 +30,11 @@ const getQuantityElemnts = (heightElement) => {
   return document.documentElement.clientHeight / heightElement + 1;
 };
 
+//? Get random int with specific range
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 //? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
 const startGame = () => {
   start.classList.add("hide");
@@ -42,11 +47,6 @@ const startGame = () => {
     line.style.top = i * 100 + "px";
     line.y = i * 100;
     gameArea.appendChild(line);
-  }
-
-  //? Get random int with specific range
-  function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   //? Machine addition cycle
@@ -62,6 +62,7 @@ const startGame = () => {
     gameArea.appendChild(enemy);
   }
 
+  setting.score = 0;
   setting.start = true;
   gameArea.appendChild(car);
   setting.x = car.offsetLeft;
@@ -72,6 +73,8 @@ const startGame = () => {
 //? The function is responsible for controlling objects on the page
 const playGame = () => {
   if (setting.start) {
+    setting.score += setting.speed;
+    score.innerHTML = "SCORE<br> " + setting.score;
     moveRoad();
     moveEnemy();
 
