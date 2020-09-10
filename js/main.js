@@ -58,7 +58,7 @@ const startGame = () => {
       Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     enemy.y = -110 * setting.traffic * (i + 1);
     enemy.style.top = enemy.y + "px";
-    enemy.style.background = `transparent url(/image/enemy${rnd}.webp) center / cover no-repeat`;
+    enemy.style.background = `transparent url(image/enemy${rnd}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
   }
 
