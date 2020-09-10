@@ -8,8 +8,6 @@
     height: 110px;
     background: transparent url(/image/player_2.webp) center / cover no-repeat;
     position: absolute;
-    left: 125px;
-    bottom: 10px;
 }
 
 .game-area {

@@ -21,8 +21,8 @@ const keys = {
 const setting = {
   start: false,
   score: 0,
-  speed: 3,
-  traffic: 3,
+  speed: 5,
+  traffic: 4,
 };
 
 //? The function calculates the height of the user's screen and returns the number of lines to fill it
@@ -38,7 +38,7 @@ function getRandomInt(min, max) {
 //? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
 const startGame = () => {
   start.classList.add("hide");
-
+  gameArea.innerHTML = "";
   //? Lines addition cycle
   for (let i = 0; i < getQuantityElemnts(100); i++) {
     const line = document.createElement("div");
@@ -65,6 +65,11 @@ const startGame = () => {
   setting.score = 0;
   setting.start = true;
   gameArea.appendChild(car);
+
+  car.style.left = gameArea.offsetWidth / 2 - car.offsetWidth / 2;
+  car.style.top = "auto";
+  car.style.bottom = "10px";
+
   setting.x = car.offsetLeft;
   setting.y = car.offsetTop;
   requestAnimationFrame(playGame);
@@ -137,6 +142,9 @@ const moveEnemy = () => {
       carRect.bottom >= enemyRect.top
     ) {
       setting.start = false;
+      console.warn("ДТП");
+      start.classList.remove("hide");
+      start.style.top = score.offsetHeight;
     }
 
     item.y += setting.speed / 2;
