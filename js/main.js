@@ -51,6 +51,7 @@ const startGame = () => {
     line.classList.add("line");
     //* 50 'it's distance between lines
     line.style.top = i * HEIGHT_ELEM + "px";
+    line.style.height = HEIGHT_ELEM / 2 + "px";
     line.y = i * HEIGHT_ELEM;
     gameArea.appendChild(line);
   }
@@ -60,13 +61,13 @@ const startGame = () => {
     const enemy = document.createElement("div");
     const randomEnemy = Math.floor(Math.random() * MAX_ENEMY) + 1;
     enemy.classList.add("enemy");
-    enemy.style.left =
-      Math.floor(Math.random() * (gameArea.offsetWidth - enemy.offsetWidth)) +
-      "px";
     enemy.y = -HEIGHT_ELEM * setting.traffic * (i + 1);
     enemy.style.top = enemy.y + "px";
     enemy.style.background = `transparent url(image/enemy${randomEnemy}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
+    enemy.style.left =
+      Math.floor(Math.random() * (gameArea.offsetWidth - enemy.offsetWidth)) +
+      "px";
   }
 
   setting.score = 0;
@@ -160,9 +161,8 @@ const moveEnemy = () => {
     if (item.y >= gameArea.offsetHeight) {
       item.y = -HEIGHT_ELEM * setting.traffic;
       item.style.left =
-        Math.floor(
-          Math.random() * (gameArea.offsetWidth - enemies.offsetWidth)
-        ) + "px";
+        Math.floor(Math.random() * (gameArea.offsetWidth - item.offsetWidth)) +
+        "px";
     }
   });
 };
