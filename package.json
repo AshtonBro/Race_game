@@ -1,0 +1,24 @@
+{
+  "name": "needfjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AshtonBro/Race_game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AshtonBro/Race_game/issues"
+  },
+  "homepage": "https://github.com/AshtonBro/Race_game#readme",
+  "devDependencies": {
+    "electron": "^10.1.1",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  }
+}
