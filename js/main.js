@@ -16,6 +16,10 @@ audio.style.cssText = `position: absolute; top: -1000px`;
 
 car.classList.add("car");
 
+//? get height of screen and count section
+gameArea.style.height =
+  Math.floor(document.documentElement.clientHeight / HEIGHT_ELEM) * HEIGHT_ELEM;
+
 //? "Enum" object control
 const keys = {
   ArrowUp: false,
@@ -34,7 +38,7 @@ const setting = {
 
 //? The function calculates the height of the user's screen and returns the number of lines to fill it
 const getQuantityElemnts = (heightElement) => {
-  return document.documentElement.clientHeight / heightElement + 1;
+  return gameArea.offsetHeight / heightElement + 1;
 };
 
 //? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
@@ -123,7 +127,7 @@ const moveRoad = () => {
   lines.forEach((item) => {
     item.y += setting.speed;
     item.style.top = item.y + "px";
-    if (item.y > document.documentElement.clientHeight) {
+    if (item.y > gameArea.offsetHeight) {
       item.y = -HEIGHT_ELEM;
     }
   });
@@ -153,7 +157,7 @@ const moveEnemy = () => {
 
     item.y += setting.speed / 2;
     item.style.top = item.y + "px";
-    if (item.y >= document.documentElement.clientHeight) {
+    if (item.y >= gameArea.offsetHeight) {
       item.y = -HEIGHT_ELEM * setting.traffic;
       item.style.left =
         Math.floor(Math.random() * (gameArea.offsetWidth - HEIGHT_ELEM / 2)) +
