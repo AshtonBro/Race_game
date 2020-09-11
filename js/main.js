@@ -1,5 +1,7 @@
 "use strict";
 
+const MAX_ENEMY = 6;
+
 //? Get DOM elements
 const score = document.querySelector(".score"),
   game = document.querySelector(".game"),
@@ -30,11 +32,6 @@ const getQuantityElemnts = (heightElement) => {
   return document.documentElement.clientHeight / heightElement + 1;
 };
 
-//? Get random int with specific range
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 //? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
 const startGame = () => {
   start.classList.add("hide");
@@ -52,13 +49,13 @@ const startGame = () => {
   //? Machine addition cycle
   for (let i = 0; i < getQuantityElemnts(110 * setting.traffic); i++) {
     const enemy = document.createElement("div");
-    let rnd = getRandomInt(2, 6);
+    const randomEnemy = Math.floor(Math.random() * MAX_ENEMY) + 1;
     enemy.classList.add("enemy");
     enemy.style.left =
       Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
     enemy.y = -110 * setting.traffic * (i + 1);
     enemy.style.top = enemy.y + "px";
-    enemy.style.background = `transparent url(image/enemy${rnd}.webp) center / cover no-repeat`;
+    enemy.style.background = `transparent url(image/enemy${randomEnemy}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
   }
 
