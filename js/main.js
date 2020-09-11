@@ -61,7 +61,7 @@ const startGame = () => {
     const randomEnemy = Math.floor(Math.random() * MAX_ENEMY) + 1;
     enemy.classList.add("enemy");
     enemy.style.left =
-      Math.floor(Math.random() * (gameArea.offsetWidth - HEIGHT_ELEM / 2)) +
+      Math.floor(Math.random() * (gameArea.offsetWidth - enemy.offsetWidth)) +
       "px";
     enemy.y = -HEIGHT_ELEM * setting.traffic * (i + 1);
     enemy.style.top = enemy.y + "px";
@@ -160,8 +160,9 @@ const moveEnemy = () => {
     if (item.y >= gameArea.offsetHeight) {
       item.y = -HEIGHT_ELEM * setting.traffic;
       item.style.left =
-        Math.floor(Math.random() * (gameArea.offsetWidth - HEIGHT_ELEM / 2)) +
-        "px";
+        Math.floor(
+          Math.random() * (gameArea.offsetWidth - enemies.offsetWidth)
+        ) + "px";
     }
   });
 };
