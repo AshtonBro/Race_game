@@ -32,8 +32,8 @@ const keys = {
 const setting = {
   start: false,
   score: 0,
-  speed: 5,
-  traffic: 4,
+  speed: 3,
+  traffic: 3,
 };
 
 //? The function calculates the height of the user's screen and returns the number of lines to fill it
@@ -61,7 +61,11 @@ const startGame = () => {
     const enemy = document.createElement("div");
     const randomEnemy = Math.floor(Math.random() * MAX_ENEMY) + 1;
     enemy.classList.add("enemy");
-    enemy.y = -HEIGHT_ELEM * setting.traffic * (i + 1);
+    const rangeBetweenEnemy = -HEIGHT_ELEM * setting.traffic * (i + 1);
+    enemy.y =
+      rangeBetweenEnemy < 100
+        ? -100 * setting.traffic * (i + 1)
+        : rangeBetweenEnemy;
     enemy.style.top = enemy.y + "px";
     enemy.style.background = `transparent url(image/enemy${randomEnemy}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
@@ -158,6 +162,7 @@ const moveEnemy = () => {
 
     item.y += setting.speed / 2;
     item.style.top = item.y + "px";
+
     if (item.y >= gameArea.offsetHeight) {
       item.y = -HEIGHT_ELEM * setting.traffic;
       item.style.left =
