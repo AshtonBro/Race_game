@@ -1,5 +1,6 @@
 .hide {
   display: none;
+  transition: 0.5s;
 }
 
 .car,
@@ -45,7 +46,6 @@
   color: #ffffff;
   font-size: 1.5rem;
   background: black;
-  cursor: pointer;
   font-family: sans-serif;
   font-weight: 700;
 }
@@ -63,4 +63,16 @@
   text-align: center;
   font-family: sans-serif;
   font-weight: 500;
+  transition: 3.5s;
+}
+
+.button {
+  padding: 10px 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: rgb(90, 167, 90);
+  transition: 0.5s;
 }
