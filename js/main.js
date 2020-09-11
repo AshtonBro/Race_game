@@ -8,9 +8,11 @@ const score = document.querySelector(".score"),
   game = document.querySelector(".game"),
   start = document.querySelector(".game-start"),
   gameArea = document.querySelector(".game-area"),
-  car = document.createElement("div");
+  car = document.createElement("div"),
+  topScore = document.querySelector(".top-score");
 
 const audio = document.createElement("embed");
+const crash = new Audio("crash.mp3");
 audio.src = "audio.mp3";
 audio.style.cssText = `position: absolute; top: -1000px`;
 
@@ -32,8 +34,16 @@ const keys = {
 const setting = {
   start: false,
   score: 0,
-  speed: 3,
-  traffic: 3,
+  speed: 0,
+  traffic: 0,
+};
+
+const localScore = localStorage.getItem("nfjs_score", setting.score);
+topScore.textContent = localScore ? localScore : 0;
+
+const addLocalStorage = () => {
+  localStorage.setItem("nfjs_score", setting.score);
+  topScore.textContent = setting.score;
 };
 
 //? The function calculates the height of the user's screen and returns the number of lines to fill it
@@ -42,7 +52,28 @@ const getQuantityElemnts = (heightElement) => {
 };
 
 //? Еhe function starts the game, creates elements on the page, launches requestAnimationFrame
-const startGame = () => {
+const startGame = (event) => {
+  const target = event.target;
+
+  if (target === start) {
+    return;
+  }
+
+  switch (target.id) {
+    case "easy":
+      setting.speed = "3";
+      setting.traffic = "4";
+      break;
+    case "middle":
+      setting.speed = "5";
+      setting.traffic = "3";
+      break;
+    case "hard":
+      setting.speed = "8";
+      setting.traffic = "2";
+      break;
+  }
+
   start.classList.add("hide");
   gameArea.innerHTML = "";
   //? Lines addition cycle
@@ -90,25 +121,25 @@ const startGame = () => {
 //? The function is responsible for controlling objects on the page
 const playGame = () => {
   if (setting.start) {
-    setting.score += setting.speed;
+    setting.score += +setting.speed;
     score.innerHTML = "SCORE<br> " + setting.score;
     moveRoad();
     moveEnemy();
 
     if (keys.ArrowLeft && setting.x > 0) {
-      setting.x -= setting.speed;
+      setting.x -= +setting.speed;
     }
     if (keys.ArrowRight && setting.x < gameArea.offsetWidth - car.offsetWidth) {
-      setting.x += setting.speed;
+      setting.x += +setting.speed;
     }
     if (keys.ArrowUp && setting.y > 0) {
-      setting.y -= setting.speed;
+      setting.y -= +setting.speed;
     }
     if (
       keys.ArrowDown &&
       setting.y < gameArea.offsetHeight - car.offsetHeight
     ) {
-      setting.y += setting.speed;
+      setting.y += +setting.speed;
     }
     car.style.left = setting.x + "px";
     car.style.top = setting.y + "px";
@@ -130,7 +161,7 @@ const stopRun = (event) => {
 const moveRoad = () => {
   let lines = document.querySelectorAll(".line");
   lines.forEach((item) => {
-    item.y += setting.speed;
+    item.y += +setting.speed;
     item.style.top = item.y + "px";
     if (item.y > gameArea.offsetHeight) {
       item.y = -HEIGHT_ELEM;
@@ -155,12 +186,15 @@ const moveEnemy = () => {
     ) {
       setting.start = false;
       console.warn("ДТП");
+      crash.play();
       audio.remove();
       start.classList.remove("hide");
       start.style.top = score.offsetHeight;
+
+      addLocalStorage();
     }
 
-    item.y += setting.speed / 2;
+    item.y += +setting.speed / 2;
     item.style.top = item.y + "px";
 
     if (item.y >= gameArea.offsetHeight) {
