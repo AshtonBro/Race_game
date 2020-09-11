@@ -9,6 +9,10 @@ const score = document.querySelector(".score"),
   gameArea = document.querySelector(".game-area"),
   car = document.createElement("div");
 
+const audio = document.createElement("embed");
+audio.src = "audio.mp3";
+audio.style.cssText = `position: absolute; top: -1000px`;
+
 car.classList.add("car");
 
 //? "Enum" object control
@@ -62,7 +66,7 @@ const startGame = () => {
   setting.score = 0;
   setting.start = true;
   gameArea.appendChild(car);
-
+  document.body.append(audio);
   car.style.left = gameArea.offsetWidth / 2 - car.offsetWidth / 2;
   car.style.top = "auto";
   car.style.bottom = "10px";
@@ -140,6 +144,7 @@ const moveEnemy = () => {
     ) {
       setting.start = false;
       console.warn("ДТП");
+      audio.remove();
       start.classList.remove("hide");
       start.style.top = score.offsetHeight;
     }
