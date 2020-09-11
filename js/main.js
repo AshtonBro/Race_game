@@ -36,7 +36,10 @@ const setting = {
   score: 0,
   speed: 0,
   traffic: 0,
+  level: 0,
 };
+
+let level = setting.level;
 
 const localScore = localStorage.getItem("nfjs_score", setting.score);
 topScore.textContent = localScore ? localScore : 0;
@@ -69,7 +72,7 @@ const startGame = (event) => {
       setting.traffic = "3";
       break;
     case "hard":
-      setting.speed = "8";
+      setting.speed = "9";
       setting.traffic = "2";
       break;
   }
