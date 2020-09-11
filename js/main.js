@@ -1,6 +1,7 @@
 "use strict";
 
 const MAX_ENEMY = 6;
+const HEIGHT_ELEM = 100;
 
 //? Get DOM elements
 const score = document.querySelector(".score"),
@@ -41,23 +42,24 @@ const startGame = () => {
   start.classList.add("hide");
   gameArea.innerHTML = "";
   //? Lines addition cycle
-  for (let i = 0; i < getQuantityElemnts(100); i++) {
+  for (let i = 0; i < getQuantityElemnts(HEIGHT_ELEM); i++) {
     const line = document.createElement("div");
     line.classList.add("line");
     //* 50 'it's distance between lines
-    line.style.top = i * 100 + "px";
-    line.y = i * 100;
+    line.style.top = i * HEIGHT_ELEM + "px";
+    line.y = i * HEIGHT_ELEM;
     gameArea.appendChild(line);
   }
 
   //? Machine addition cycle
-  for (let i = 0; i < getQuantityElemnts(110 * setting.traffic); i++) {
+  for (let i = 0; i < getQuantityElemnts(HEIGHT_ELEM * setting.traffic); i++) {
     const enemy = document.createElement("div");
     const randomEnemy = Math.floor(Math.random() * MAX_ENEMY) + 1;
     enemy.classList.add("enemy");
     enemy.style.left =
-      Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
-    enemy.y = -110 * setting.traffic * (i + 1);
+      Math.floor(Math.random() * (gameArea.offsetWidth - HEIGHT_ELEM / 2)) +
+      "px";
+    enemy.y = -HEIGHT_ELEM * setting.traffic * (i + 1);
     enemy.style.top = enemy.y + "px";
     enemy.style.background = `transparent url(image/enemy${randomEnemy}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
@@ -122,7 +124,7 @@ const moveRoad = () => {
     item.y += setting.speed;
     item.style.top = item.y + "px";
     if (item.y > document.documentElement.clientHeight) {
-      item.y = -100;
+      item.y = -HEIGHT_ELEM;
     }
   });
 };
@@ -152,9 +154,10 @@ const moveEnemy = () => {
     item.y += setting.speed / 2;
     item.style.top = item.y + "px";
     if (item.y >= document.documentElement.clientHeight) {
-      item.y = -100 * setting.traffic;
+      item.y = -HEIGHT_ELEM * setting.traffic;
       item.style.left =
-        Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
+        Math.floor(Math.random() * (gameArea.offsetWidth - HEIGHT_ELEM / 2)) +
+        "px";
     }
   });
 };
