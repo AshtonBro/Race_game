@@ -9,7 +9,8 @@ const score = document.querySelector(".score"),
   start = document.querySelector(".game-start"),
   gameArea = document.querySelector(".game-area"),
   car = document.createElement("div"),
-  topScore = document.querySelector(".top-score");
+  topScore = document.querySelector(".top-score"),
+  speed = document.querySelector(".speed");
 
 const audio = document.createElement("embed");
 const crash = new Audio("crash.mp3");
@@ -41,12 +42,14 @@ const setting = {
 
 let level = setting.level;
 
-const localScore = localStorage.getItem("nfjs_score", setting.score);
+const localScore = parseInt(localStorage.getItem("nfjs_score", setting.score));
 topScore.textContent = localScore ? localScore : 0;
 
 const addLocalStorage = () => {
-  localStorage.setItem("nfjs_score", setting.score);
-  topScore.textContent = setting.score;
+  if (localScore < setting.score) {
+    localStorage.setItem("nfjs_score", setting.score);
+    topScore.textContent = setting.score;
+  }
 };
 
 //? The function calculates the height of the user's screen and returns the number of lines to fill it
@@ -95,6 +98,8 @@ const startGame = (event) => {
     const enemy = document.createElement("div");
     const randomEnemy = Math.floor(Math.random() * MAX_ENEMY) + 1;
     enemy.classList.add("enemy");
+    enemy.style.height = HEIGHT_ELEM + "px";
+    enemy.style.weight = HEIGHT_ELEM / 2 + "px";
     const rangeBetweenEnemy = -HEIGHT_ELEM * setting.traffic * (i + 1);
     enemy.y =
       rangeBetweenEnemy < 100
@@ -115,7 +120,6 @@ const startGame = (event) => {
   car.style.left = gameArea.offsetWidth / 2 - car.offsetWidth / 2;
   car.style.top = "auto";
   car.style.bottom = "10px";
-
   setting.x = car.offsetLeft;
   setting.y = car.offsetTop;
   requestAnimationFrame(playGame);
@@ -123,6 +127,13 @@ const startGame = (event) => {
 
 //? The function is responsible for controlling objects on the page
 const playGame = () => {
+  // setting.level = Math.floor(setting.score / 1000);
+
+  // if (setting.level !== level) {
+  //   level = setting.level;
+  //   setting.speed += 1;
+  // }
+
   if (setting.start) {
     setting.score += +setting.speed;
     score.innerHTML = "SCORE<br> " + setting.score;
@@ -193,7 +204,6 @@ const moveEnemy = () => {
       audio.remove();
       start.classList.remove("hide");
       start.style.top = score.offsetHeight;
-
       addLocalStorage();
     }
 
@@ -213,3 +223,9 @@ const moveEnemy = () => {
 start.addEventListener("click", startGame);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
+speed.addEventListener("click", () => {
+  let count = setting.speed;
+  count++;
+  console.log("count: ", count);
+  setting.speed = `${count}`;
+});
