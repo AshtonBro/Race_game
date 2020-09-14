@@ -14,6 +14,7 @@ const score = document.querySelector(".score"),
 
 const audio = document.createElement("embed");
 const crash = new Audio("crash.mp3");
+
 audio.src = "audio.mp3";
 audio.style.cssText = `position: absolute; top: -1000px`;
 
@@ -36,7 +37,7 @@ const setting = {
   start: false,
   score: 0,
   speed: 0,
-  traffic: 0,
+  traffic: 7,
   level: 0,
 };
 
@@ -102,9 +103,9 @@ const startGame = (event) => {
     enemy.style.weight = HEIGHT_ELEM / 2 + "px";
     const rangeBetweenEnemy = -HEIGHT_ELEM * setting.traffic * (i + 1);
     enemy.y =
-      rangeBetweenEnemy < 100
-        ? -100 * setting.traffic * (i + 1)
-        : rangeBetweenEnemy;
+      rangeBetweenEnemy < 100 ?
+      -100 * setting.traffic * (i + 1) :
+      rangeBetweenEnemy;
     enemy.style.top = enemy.y + "px";
     enemy.style.background = `transparent url(image/enemy${randomEnemy}.webp) center / cover no-repeat`;
     gameArea.appendChild(enemy);
@@ -193,14 +194,15 @@ const moveEnemy = () => {
 
     //* Finding collision zones
     if (
-      carRect.top <= enemyRect.bottom &&
-      carRect.right >= enemyRect.left &&
-      carRect.left <= enemyRect.right &&
+      carRect.top + 1 <= enemyRect.bottom &&
+      carRect.right - 5 >= enemyRect.left &&
+      carRect.left + 5 <= enemyRect.right &&
       carRect.bottom >= enemyRect.top
     ) {
       setting.start = false;
       console.warn("ДТП");
       crash.play();
+      crash.volume = 0.2;
       audio.remove();
       start.classList.remove("hide");
       start.style.top = score.offsetHeight;
@@ -226,6 +228,5 @@ document.addEventListener("keyup", stopRun);
 speed.addEventListener("click", () => {
   let count = setting.speed;
   count++;
-  console.log("count: ", count);
   setting.speed = `${count}`;
 });
