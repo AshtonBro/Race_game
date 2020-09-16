@@ -9,6 +9,7 @@
   height: 100px;
   background: transparent url(../image/player_2.webp) center / cover no-repeat;
   position: absolute;
+  border-radius: 10px;
 }
 
 .game {
