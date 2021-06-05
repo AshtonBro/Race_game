@@ -128,13 +128,6 @@ const startGame = (event) => {
 
 //? The function is responsible for controlling objects on the page
 const playGame = () => {
-  // setting.level = Math.floor(setting.score / 1000);
-
-  // if (setting.level !== level) {
-  //   level = setting.level;
-  //   setting.speed += 1;
-  // }
-
   if (setting.start) {
     setting.score += +setting.speed;
     score.innerHTML = "SCORE<br> " + setting.score;
@@ -144,12 +137,15 @@ const playGame = () => {
     if (keys.ArrowLeft && setting.x > 0) {
       setting.x -= +setting.speed;
     }
+
     if (keys.ArrowRight && setting.x < gameArea.offsetWidth - car.offsetWidth) {
       setting.x += +setting.speed;
     }
+
     if (keys.ArrowUp && setting.y > 0) {
       setting.y -= +setting.speed;
     }
+
     if (
       keys.ArrowDown &&
       setting.y < gameArea.offsetHeight - car.offsetHeight
